@@ -18,6 +18,26 @@ Icon
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
+
+# Obsidian Plugin Specific
+node_modules/
+main.js
+*.tgz
+data.json
+
+# Build outputs
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Development
+.obsidian/
+
+# IDE
+.vscode/
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
