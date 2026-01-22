@@ -15,8 +15,10 @@ export class SettingsEnforcerSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		// Header
-		containerEl.createEl('h2', { text: 'Settings Enforcer Configuration' });
+		// Main heading
+		new Setting(containerEl)
+			.setName('Settings Enforcer configuration')
+			.setHeading();
 		
 		containerEl.createEl('p', { 
 			text: 'This plugin enforces selected Obsidian core settings at startup. These settings will override your core app configuration when the plugin is enabled.',
@@ -91,7 +93,9 @@ export class SettingsEnforcerSettingTab extends PluginSettingTab {
 				}));
 
 		// Current values display
-		containerEl.createEl('h3', { text: 'Current Core Settings' });
+		new Setting(containerEl)
+			.setName('Current core settings')
+			.setHeading();
 		
 		const currentSettings = this.plugin.getCurrentCoreSettings();
 		

@@ -6,8 +6,6 @@ export default class SettingsEnforcerPlugin extends Plugin {
 	settings: EnforcerSettings;
 
 	async onload() {
-		console.log('Loading Settings Enforcer plugin');
-		
 		await this.loadSettings();
 		
 		// Add settings tab
@@ -27,7 +25,7 @@ export default class SettingsEnforcerPlugin extends Plugin {
 	}
 
 	async onunload() {
-		console.log('Unloading Settings Enforcer plugin');
+		// Plugin cleanup happens automatically
 	}
 
 	async loadSettings() {
@@ -49,7 +47,6 @@ export default class SettingsEnforcerPlugin extends Plugin {
 
 	async enforceSettings(): Promise<void> {
 		if (!this.settings.enabled) {
-			console.log('Settings enforcement is disabled');
 			return;
 		}
 
@@ -62,29 +59,24 @@ export default class SettingsEnforcerPlugin extends Plugin {
 			if (currentConfig.newFileLocation !== this.settings.newFileLocation) {
 				configToUpdate.newFileLocation = this.settings.newFileLocation;
 				hasChanges = true;
-				console.log(`Updating newFileLocation: ${currentConfig.newFileLocation} → ${this.settings.newFileLocation}`);
 			}
 
 			// Check and update newFileFolderPath
 			if (currentConfig.newFileFolderPath !== this.settings.newFileFolderPath) {
 				configToUpdate.newFileFolderPath = this.settings.newFileFolderPath;
 				hasChanges = true;
-				console.log(`Updating newFileFolderPath: ${currentConfig.newFileFolderPath} → ${this.settings.newFileFolderPath}`);
 			}
 
 			// Check and update attachmentFolderPath
 			if (currentConfig.attachmentFolderPath !== this.settings.attachmentFolderPath) {
 				configToUpdate.attachmentFolderPath = this.settings.attachmentFolderPath;
 				hasChanges = true;
-				console.log(`Updating attachmentFolderPath: ${currentConfig.attachmentFolderPath} → ${this.settings.attachmentFolderPath}`);
 			}
 
 			// Apply changes if any
 			if (hasChanges) {
 				await this.updateVaultConfig(configToUpdate);
 				new Notice('Settings enforced successfully');
-			} else {
-				console.log('No settings changes needed');
 			}
 		} catch (error) {
 			console.error('Failed to enforce settings:', error);

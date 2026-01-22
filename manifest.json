@@ -2,8 +2,8 @@
 	"id": "settings-enforcer",
 	"name": "Settings Enforcer",
 	"version": "0.0.1",
-	"minAppVersion": "0.15.0",
-	"description": "Enforce selected core app.json settings at startup without tracking app.json in Git",
+	"minAppVersion": "1.11.4",
+	"description": "Enforce selected core app.json settings at startup without tracking app.json in Git.",
 	"author": "Chris Caskey",
 	"authorUrl": "https://github.com/cdcaskey",
 	"isDesktopOnly": false
