@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-settings-enforcer",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Obsidian plugin to enforce selected core app.json settings at startup",
 	"main": "main.js",
 	"scripts": {
