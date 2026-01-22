@@ -5,16 +5,16 @@ import { EnforcerSettings, DEFAULT_SETTINGS, ObsidianAppConfig } from './types';
 export default class SettingsEnforcerPlugin extends Plugin {
 	settings: EnforcerSettings;
 
-	async onload() {
-		await this.loadSettings();
-		
-		// Add settings tab
-		this.addSettingTab(new SettingsEnforcerSettingTab(this.app, this));
-		
-		// Enforce settings on startup if enabled
-		if (this.settings.enabled) {
-			await this.enforceSettings();
-		}
+	onload() {
+		this.loadSettings().then(() => {
+			// Add settings tab
+			this.addSettingTab(new SettingsEnforcerSettingTab(this.app, this));
+			
+			// Enforce settings on startup if enabled
+			if (this.settings.enabled) {
+				this.enforceSettings();
+			}
+		});
 		
 		// Add command to manually enforce settings
 		this.addCommand({
@@ -24,7 +24,7 @@ export default class SettingsEnforcerPlugin extends Plugin {
 		});
 	}
 
-	async onunload() {
+	onunload() {
 		// Plugin cleanup happens automatically
 	}
 
@@ -37,11 +37,11 @@ export default class SettingsEnforcerPlugin extends Plugin {
 	}
 
 	getCurrentCoreSettings(): ObsidianAppConfig {
-		const config = (this.app as any).vault.config || {};
+		const config = (this.app.vault as unknown as { config: Record<string, unknown> }).config || {};
 		return {
-			newFileLocation: config.newFileLocation,
-			newFileFolderPath: config.newFileFolderPath,
-			attachmentFolderPath: config.attachmentFolderPath
+			newFileLocation: config.newFileLocation as 'current' | 'folder' | 'root',
+			newFileFolderPath: config.newFileFolderPath as string,
+			attachmentFolderPath: config.attachmentFolderPath as string
 		};
 	}
 
@@ -86,7 +86,11 @@ export default class SettingsEnforcerPlugin extends Plugin {
 
 	private async updateVaultConfig(updates: Partial<ObsidianAppConfig>): Promise<void> {
 		// Access the vault's config using the internal API
-		const vault = this.app.vault as any;
+		const vault = this.app.vault as unknown as {
+			setConfig?: (key: string, value: unknown) => Promise<void>;
+			config?: Record<string, unknown>;
+			trigger?: (event: string) => void;
+		};
 		
 		if (vault.setConfig) {
 			// Use the setConfig method if available (newer versions)

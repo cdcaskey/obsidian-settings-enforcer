@@ -17,7 +17,7 @@ export class SettingsEnforcerSettingTab extends PluginSettingTab {
 
 		// Main heading
 		new Setting(containerEl)
-			.setName('Settings Enforcer configuration')
+			.setName('Configuration')
 			.setHeading();
 		
 		containerEl.createEl('p', { 
@@ -94,7 +94,7 @@ export class SettingsEnforcerSettingTab extends PluginSettingTab {
 
 		// Current values display
 		new Setting(containerEl)
-			.setName('Current core settings')
+			.setName('Current core values')
 			.setHeading();
 		
 		const currentSettings = this.plugin.getCurrentCoreSettings();
